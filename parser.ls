@@ -5,7 +5,8 @@ fs.unlink-sync 'output.csv' if fs.exists-sync 'output.csv'
 
 file <- fs.readdir-sync 'xml' .map
 
-console.log file
+return unless file.match /\.xml$/
+
 xml = fs.read-file-sync 'xml/' + file, 'utf8'
 
 err, result <- parse-string xml
