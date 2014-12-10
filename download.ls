@@ -27,8 +27,13 @@ function download-file (url)
 tasks = []
 
 end = ->
-  err, results <- async.series tasks.slice 0, 50
-  console.log results.length
+  i = -50
+  setInterval ->
+    i += 50
+    console.log i
+    err, results <- async.series tasks.slice i, i+50
+    console.log results.length + " items done."
+  , 60000
 
 data <- fs.createReadStream '1983-2013 all 2.csv' .pipe csv-parser! .on 'end' end .on \data
 tasks.push (next) ->
